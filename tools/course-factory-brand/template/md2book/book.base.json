@@ -1,0 +1,110 @@
+{
+  "_comentario": "Base de estilo do LIVRO de curso — pré-molde Course Factory, contrato course-factory-brand. O tools/publish-course.py mescla este arquivo com os dados do curso e grava <curso>/97-publicacao/livro/livro.json. Não edite o livro.json de um curso para mudar o estilo de todos: mude aqui. As famílias abaixo são as Latin Modern, que vêm com qualquer TeX Live — o kit não distribui arquivo de fonte.",
+
+  "raiz": "../..",
+  "saida": "97-publicacao/livro/latex",
+  "nome_arquivo": "livro",
+
+  "idioma": "brazil",
+  "papel": "a4paper",
+  "corpo": "11pt",
+  "duas_faces": true,
+  "geometria": "inner=2.8cm,outer=2.2cm,top=2.4cm,bottom=2.6cm,headsep=14pt",
+
+  "cor_destaque": "1D4ED8",
+  "cor_codigo_fundo": "F6F7F9",
+  "cor_codigo_borda": "D8DDE5",
+
+  "fontes": {
+    "texto": "Latin Modern Roman",
+    "titulo": "Latin Modern Sans",
+    "mono": "Latin Modern Mono",
+    "simbolos": "DejaVu Sans",
+    "escala_texto": 1.0,
+    "escala_mono": 0.86
+  },
+
+  "tamanho_codigo": 7.6,
+  "sangria_codigo": "0.8cm",
+  "regua_horizontal": "ignorar",
+  "remover_numeracao_titulos": true,
+  "referencia_capitulo": true,
+  "rotulo_linguagem": true,
+  "profundidade_sumario": 1,
+  "profundidade_numeracao": 2,
+
+  "ignorar": [
+    "97-publicacao/**",
+    "**/node_modules/**",
+    "**/.git/**",
+    "**/build/**",
+    "**/dist/**",
+    "**/.venv/**",
+    "**/__pycache__/**"
+  ],
+
+  "abertura": ["00-MAPA.md"],
+
+  "partes": [
+    {
+      "titulo": "Porta de entrada",
+      "subtitulo": "Do zero absoluto ao ambiente pronto e ao primeiro resultado",
+      "arquivos": [
+        "0[1-6]-*.md",
+        "07-projeto-modelo/README.md",
+        "07-projeto*/**",
+        "0[8-9]-*.md"
+      ]
+    },
+    {
+      "titulo": "Núcleo",
+      "subtitulo": "Fundamentos, mecânica interna, teoria e estado da arte",
+      "arquivos": ["[1-6][0-9]-*.md"]
+    },
+    {
+      "titulo": "Prática e erros",
+      "subtitulo": "Laboratórios, armadilhas e o que costuma dar errado",
+      "arquivos": ["7[0-9]-*.md"]
+    },
+    {
+      "titulo": "Economia e ecossistema",
+      "subtitulo": "Quanto custa, quem paga a conta, onde estudar mais",
+      "arquivos": ["8[0-9]-*.md"]
+    },
+    {
+      "titulo": "Fontes",
+      "subtitulo": "Bibliografia, referências e vocabulário",
+      "arquivos": ["9[0-9]-*.md", "GLOSSARIO.md"]
+    }
+  ],
+
+  "incluir_restantes": true,
+  "titulo_restantes": "Complementos",
+
+  "apendice_fontes": {
+    "ativo": true,
+    "titulo": "Código-fonte dos projetos-modelo",
+    "introducao": "Listagem integral dos arquivos dos projetos-modelo, para leitura em papel. Nada foi resumido: o que está no repositório está aqui.",
+    "padroes": ["07-projeto*/**/*"],
+    "ignorar": [
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.gif", "**/*.svg",
+      "**/*.pdf", "**/*.ico", "**/*.lock", "**/*.sqlite3", "**/*.db",
+      "**/*.zip", "**/*.tar.gz", "**/__pycache__/**", "**/.venv/**",
+      "**/dist/**", "**/build/**"
+    ],
+    "tamanho_maximo": 200000
+  },
+
+  "recursos": [
+    "97-publicacao/tema/coursebook.sty",
+    "97-publicacao/tema/brand-env.tex"
+  ],
+  "pacotes_extra": ["coursebook"],
+  "capa_comando": "\\cfbookopening",
+  "encerramento": ["\\cfcolophon"],
+
+  "motor": "xelatex",
+  "passagens": 3
+}

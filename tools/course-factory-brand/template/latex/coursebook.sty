@@ -1,0 +1,300 @@
+%% ============================================================================
+%%  coursebook.sty — pré-molde neutro "Course Factory" aplicado a LIVRO de curso
+%%  ---------------------------------------------------------------------------
+%%  Implementa o contrato `course-factory-brand` para o livro.
+%%  Camada de marca sobre a classe `book` (o miolo é gerado pelo md2book).
+%%  Identidade: BRAND-MANUAL.md · tokens: palette/tokens.json
+%%  Compilar com: xelatex (padrão do md2book) ou lualatex.
+%%
+%%  Este arquivo NÃO é editado por curso. Todo curso se configura pelas macros
+%%  de metadados, escritas por tools/publish-course.py em `brand-env.tex`,
+%%  que este pacote lê automaticamente.
+%%
+%%  PARA TROCAR PELA SUA MARCA: mude as cores da seção "paleta", troque os PDFs
+%%  em `assets/` e ajuste `brand.env`. A estrutura das páginas pode ficar como
+%%  está — ela é um molde, não uma opinião.
+%% ============================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{coursebook}[2026/09/16 v1.0 Course Factory - livro de curso]
+
+\RequirePackage{graphicx}
+\RequirePackage{eso-pic}
+\RequirePackage{xcolor}
+\RequirePackage{etoolbox}
+\RequirePackage{needspace}
+\RequirePackage{calc}
+
+% ---------------------------------------------------------------------------
+%  Paleta — palette/tokens.json
+%  O azul conduz, o turquesa apoia, o âmbar destaca uma coisa só. No miolo
+%  impresso valem as versões "Deep": as claras são cor de tela, não de papel.
+% ---------------------------------------------------------------------------
+\definecolor{cfInk}      {HTML}{101620}
+\definecolor{cfPanel}    {HTML}{19202B}
+\definecolor{cfBorder}   {HTML}{2A3442}
+\definecolor{cfBlue}     {HTML}{3B82F6}
+\definecolor{cfBlueDeep} {HTML}{1D4ED8}
+\definecolor{cfBlueSoft} {HTML}{93B8FC}
+\definecolor{cfTeal}     {HTML}{14B8A6}
+\definecolor{cfTealDeep} {HTML}{0D7D70}
+\definecolor{cfAmber}    {HTML}{F0B429}
+\definecolor{cfPaper}    {HTML}{F6F7F9}
+\definecolor{cfPaperHi}  {HTML}{FFFFFF}
+\definecolor{cfRule}     {HTML}{D8DDE5}
+\definecolor{cfMuted}    {HTML}{8A94A6}
+\definecolor{cfSupport}  {HTML}{5A6472}
+
+% ---------------------------------------------------------------------------
+%  Caminhos. `\cfassets` aponta para a pasta com os logos em PDF; o valor
+%  padrão vale para um livro compilado em <curso>/97-publicacao/livro/latex/.
+% ---------------------------------------------------------------------------
+\def\cf@assets{../../tema/assets}
+\newcommand{\cfassets}[1]{\def\cf@assets{#1}}
+
+% ---------------------------------------------------------------------------
+%  Dados da marca — rede de segurança. O `brand-env.tex`, quando existe,
+%  sobrescreve tudo, e é regravado a cada publicação a partir do brand.env.
+% ---------------------------------------------------------------------------
+\def\cfBrand{Course Factory}
+\def\cfBrandLower{course factory}
+\def\cfTagline{Do assunto ao livro.}
+\def\cfDescriptor{Tecnologia · Ciência · Conhecimento}
+\def\cfOwner{}
+\def\cfAuthor{}
+\def\cfEmail{}
+\def\cfSite{}
+\def\cfSiteURL{}
+\def\cfPrompt{\textasciitilde/course \$}
+
+% ---------------------------------------------------------------------------
+%  Metadados do curso. Todos têm setter; o publish-course.py preenche.
+% ---------------------------------------------------------------------------
+\def\cf@title{Curso}
+\def\cf@subtitle{}
+\def\cf@subject{}
+\def\cf@version{1.0}
+\def\cf@date{}
+\def\cf@produced{}
+\def\cf@year{}
+\def\cf@level{}
+\def\cf@piece{Livro do curso}
+\def\cf@advisor{}
+\def\cf@agent{}
+\def\cf@aimodel{}
+\def\cf@license{}
+\def\cf@repo{}
+\def\cf@extent{}
+\def\cf@note{}
+
+\newcommand{\cftitle}[1]{\def\cf@title{#1}}
+\newcommand{\cfsubtitle}[1]{\def\cf@subtitle{#1}}
+\newcommand{\cfsubject}[1]{\def\cf@subject{#1}}
+\newcommand{\cfversion}[1]{\def\cf@version{#1}}
+\newcommand{\cfdate}[1]{\def\cf@date{#1}}
+\newcommand{\cfproduced}[1]{\def\cf@produced{#1}}
+\newcommand{\cfyear}[1]{\def\cf@year{#1}}
+\newcommand{\cflevel}[1]{\def\cf@level{#1}}
+\newcommand{\cfpiece}[1]{\def\cf@piece{#1}}
+\newcommand{\cfadvisor}[1]{\def\cf@advisor{#1}}
+\newcommand{\cfagent}[1]{\def\cf@agent{#1}}
+\newcommand{\cfaimodel}[1]{\def\cf@aimodel{#1}}
+\newcommand{\cflicense}[1]{\def\cf@license{#1}}
+\newcommand{\cfrepo}[1]{\def\cf@repo{#1}}
+\newcommand{\cfextent}[1]{\def\cf@extent{#1}}
+\newcommand{\cfnote}[1]{\def\cf@note{#1}}
+
+\InputIfFileExists{brand-env.tex}{}{%
+  \PackageWarning{coursebook}{brand-env.tex nao encontrado: capa e creditos
+    sairao com os valores padrao. Rode tools/publish-course.py para gera-lo.}}
+
+% ---------------------------------------------------------------------------
+%  Tipografia de apoio. O md2book já carrega as três famílias pelo
+%  `livro.json`; aqui só damos nomes de papel ao que já existe.
+% ---------------------------------------------------------------------------
+\newcommand{\cfDisplay}{\sffamily\bfseries}   % títulos de marca
+\newcommand{\cfLabel}{\ttfamily}              % rótulos, metadados, números
+\newcommand{\cfBody}{\rmfamily}               % texto corrido
+
+% O bloco turquesa que fecha a leitura — o "cursor" da marca.
+\newcommand{\cfcursor}{\,{\color{cfTeal}\rule[-0.08em]{0.42em}{0.95em}}}
+\newcommand{\cfprompt}{{\cfLabel\color{cfMuted}\cfPrompt}\,}
+
+% Assinatura: símbolo + nome em tipo. O nome vem do brand.env, então trocar a
+% marca não exige redesenhar um logotipo — que é o ponto de um pré-molde.
+\newcommand{\cf@signature}[2]{% #1 = arquivo do símbolo, #2 = cor do texto
+  \begingroup
+  \IfFileExists{\cf@assets/#1}
+    {\raisebox{-0.30\height}{\includegraphics[height=9mm]{\cf@assets/#1}}\hspace{2.5mm}}{}%
+  {\cfDisplay\fontsize{15}{18}\selectfont\color{#2}\cfBrandLower}%
+  \endgroup}
+
+% ---------------------------------------------------------------------------
+%  Capa — página escura de sangria total, assinatura no topo.
+% ---------------------------------------------------------------------------
+\newcommand{\cfbookcover}{%
+  \begingroup
+  \thispagestyle{empty}
+  \AddToShipoutPictureBG*{\AtPageLowerLeft{%
+    \color{cfInk}\rule{\paperwidth}{\paperheight}}}%
+  \color{cfPaper}\raggedright
+  \vspace*{8mm}
+  \cf@signature{symbol-color-on-dark.pdf}{cfPaper}
+  \par\vspace{4mm}
+  {\color{cfBlue}\rule{28mm}{3pt}}
+  \vfill
+  {\cfLabel\fontsize{8.5}{12}\selectfont\color{cfMuted}%
+    \MakeUppercase{\cf@piece}\par}
+  \vspace{5mm}
+  {\cfDisplay\fontsize{30}{35}\selectfont\color{cfPaper}%
+    \cf@title\cfcursor\par}
+  \ifdefempty{\cf@subtitle}{}{%
+    \vspace{5mm}{\cfBody\fontsize{12.5}{18}\selectfont\color{cfMuted}%
+      \cf@subtitle\par}}
+  \vspace{9mm}
+  {\color{cfBlue}\rule{\linewidth}{1pt}}
+  \vspace{5mm}
+  {\cfLabel\fontsize{8.5}{14}\selectfont\color{cfPaper}%
+    \begin{tabular}{@{}>{\color{cfMuted}}l l@{}}
+    \ifdefempty{\cf@advisor}{}{AUTOR \& ORIENTADOR & \cf@advisor\\}%
+    \ifdefempty{\cf@agent}{}{ESCRITO PELO AGENTE & \cf@agent\\}%
+    \ifdefempty{\cf@level}{}{NÍVEL & \cf@level\\}%
+    VERSÃO & v\cf@version\\
+    \ifdefempty{\cf@produced}{}{PRODUZIDO EM & \cf@produced\\}%
+    \ifdefempty{\cf@date}{}{PUBLICADO EM & \cf@date\\}%
+    \ifdefempty{\cf@extent}{}{EXTENSÃO & \cf@extent\\}%
+    \end{tabular}\par}
+  \vspace{11mm}
+  {\cfLabel\fontsize{8}{12}\selectfont\color{cfMuted}%
+    \cfBrand\ · \cfTagline\ifdefempty{\cfSite}{}{ · \cfSite}\par}
+  \vspace{5mm}
+  \clearpage
+  \endgroup}
+
+% ---------------------------------------------------------------------------
+%  Página de créditos — quem orientou, quem escreveu, e com o quê.
+%  Assumir o sujeito: nada de voz passiva escondendo autoria.
+% ---------------------------------------------------------------------------
+\newcommand{\cf@creditline}[2]{%
+  \noindent\begin{minipage}[t]{0.30\linewidth}
+    \cfLabel\fontsize{8}{12}\selectfont\color{cfSupport}\MakeUppercase{#1}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.66\linewidth}
+    \cfBody\fontsize{9.5}{13}\selectfont\color{cfInk}#2
+  \end{minipage}\par\vspace{2.6mm}}
+
+\newcommand{\cfcredits}{%
+  \begingroup
+  \thispagestyle{empty}
+  \null\vspace*{6mm}
+  \cf@signature{symbol-color.pdf}{cfInk}
+  \par\vspace{3mm}
+  {\color{cfBlueDeep}\rule{22mm}{2.4pt}}
+  \par\vspace{8mm}
+  {\cfDisplay\fontsize{15}{19}\selectfont\color{cfInk}Créditos da obra\par}
+  \vspace{6mm}
+  \cf@creditline{Obra}{\textbf{\cf@title}%
+    \ifdefempty{\cf@subtitle}{}{ — \cf@subtitle}}
+  \cf@creditline{Peça}{\cf@piece\ · v\cf@version%
+    \ifdefempty{\cf@date}{}{ · publicado em \cf@date}%
+    \ifdefempty{\cf@produced}{}{ · curso produzido em \cf@produced}}
+  \ifdefempty{\cf@advisor}{}{%
+    \cf@creditline{Autor e orientador}{\textbf{\cf@advisor} — definiu o escopo,
+      a profundidade, a ordem de leitura e o padrão de qualidade do material,
+      e responde pelo resultado.}}
+  \ifdefempty{\cf@agent}{}{%
+    \cf@creditline{Escrita e materialização}{\textbf{\cf@agent}%
+      \ifdefempty{\cf@aimodel}{}{ (\cf@aimodel)} — agente de inteligência
+      artificial que redigiu os textos, montou os projetos, gerou este livro em
+      \LaTeX\ e os slides das aulas, seguindo as orientações do autor. O
+      crédito é explícito por decisão editorial: quem lê tem o direito de saber
+      como o material foi produzido.}}
+  \cf@creditline{Publicação}{\cfBrand\ — \cfDescriptor.%
+    \ifdefempty{\cfSite}{}{\\\cfSite}%
+    \ifdefempty{\cfEmail}{}{\ · \cfEmail}}
+  \ifdefempty{\cf@repo}{}{%
+    \cf@creditline{Fonte}{O material nasce em Markdown e é publicado deste
+      repositório: \texttt{\cf@repo}. O livro é gerado; a fonte da verdade é o
+      texto original.}}
+  \ifdefempty{\cf@license}{}{\cf@creditline{Licença}{\cf@license}}
+  \ifdefempty{\cf@note}{}{\cf@creditline{Nota}{\cf@note}}
+  \vspace{4mm}
+  {\color{cfRule}\rule{\linewidth}{0.5pt}}\par\vspace{3mm}
+  {\cfBody\fontsize{8.6}{12.4}\selectfont\color{cfSupport}%
+    Identidade visual conforme o manual da marca em uso.
+    Este livro reúne, sem cortes, o material do curso publicado em Markdown:
+    nenhum arquivo de origem foi apagado ou resumido para caber aqui.\par}
+  \vspace{3mm}
+  {\cfLabel\fontsize{8}{12}\selectfont\color{cfSupport}\cfTagline\par}
+  \clearpage
+  \endgroup}
+
+% ---------------------------------------------------------------------------
+%  Colofão — fecha o livro com a marca.
+% ---------------------------------------------------------------------------
+\newcommand{\cfcolophon}{%
+  \begingroup
+  \clearpage\thispagestyle{empty}
+  \null\vfill
+  \begin{center}
+    \IfFileExists{\cf@assets/symbol-color.pdf}
+      {\includegraphics[height=16mm]{\cf@assets/symbol-color.pdf}}{}
+    \par\vspace{5mm}
+    {\cfDisplay\fontsize{11}{15}\selectfont\color{cfInk}\cfBrand\par}
+    \vspace{1.5mm}
+    {\cfLabel\fontsize{8.5}{13}\selectfont\color{cfSupport}\cfTagline\par}
+    \vspace{6mm}
+    {\cfBody\fontsize{8.6}{13}\selectfont\color{cfSupport}%
+      % A primeira linha é incondicional; cada bloco seguinte traz o próprio
+      % \\ DENTRO da guarda. Um \\ fora dela quebraria o colofão sempre que o
+      % campo anterior estivesse vazio ("There's no line here to end").
+      \begin{minipage}{0.72\linewidth}\centering
+      \cf@title\ · v\cf@version\ifdefempty{\cf@date}{}{ · \cf@date}%
+      \ifdefempty{\cf@advisor}{}{\\Orientação e autoria: \cf@advisor.}%
+      \ifdefempty{\cf@agent}{}{\\Escrito e materializado pelo agente
+        \cf@agent\ifdefempty{\cf@aimodel}{}{ (\cf@aimodel)}.}%
+      \ifdefempty{\cfSite}{}{\\\cfSite}%
+      \end{minipage}\par}
+  \end{center}
+  \vfill\null
+  \endgroup}
+
+% ---------------------------------------------------------------------------
+%  Cabeçalho e rodapé. Substituem o padrão do md2book: marca à esquerda no
+%  verso, título à direita na frente, número de página em mono.
+% ---------------------------------------------------------------------------
+\newcommand{\cfrule}{{\color{cfBlueDeep}\rule{\linewidth}{1.6pt}}}
+
+\AtBeginDocument{%
+  \@ifpackageloaded{fancyhdr}{%
+    \fancyhf{}%
+    \fancyhead[LE]{\cfLabel\fontsize{8}{11}\selectfont\color{cfSupport}%
+      \nouppercase{\leftmark}}%
+    \fancyhead[RO]{\cfLabel\fontsize{8}{11}\selectfont\color{cfSupport}%
+      \nouppercase{\rightmark}}%
+    \fancyfoot[LE]{\cfLabel\fontsize{8}{11}\selectfont\color{cfSupport}%
+      \textbf{\color{cfInk}\thepage}\;·\;\cfBrand}%
+    \fancyfoot[RO]{\cfLabel\fontsize{8}{11}\selectfont\color{cfSupport}%
+      \cf@title\;·\;\textbf{\color{cfInk}\thepage}}%
+    \renewcommand{\headrulewidth}{0.4pt}%
+    \renewcommand{\footrulewidth}{0pt}%
+    \fancypagestyle{plain}{\fancyhf{}%
+      \fancyfoot[LE]{\cfLabel\fontsize{8}{11}\selectfont\color{cfSupport}%
+        \textbf{\color{cfInk}\thepage}\;·\;\cfBrand}%
+      \fancyfoot[RO]{\cfLabel\fontsize{8}{11}\selectfont\color{cfSupport}%
+        \cf@title\;·\;\textbf{\color{cfInk}\thepage}}%
+      \renewcommand{\headrulewidth}{0pt}}%
+  }{}%
+  \hypersetup{pdftitle={\cf@title},
+    pdfauthor={\cf@advisor},
+    pdfsubject={\cf@piece\space v\cf@version},
+    pdfcreator={Course Factory (md2book + coursebook.sty)},
+    pdfkeywords={\cfBrand, curso, \cf@subject}}}
+
+% ---------------------------------------------------------------------------
+%  Abertura completa do livro, na ordem editorial.
+% ---------------------------------------------------------------------------
+\newcommand{\cfbookopening}{%
+  \cfbookcover
+  \cfcredits}
+
+\endinput

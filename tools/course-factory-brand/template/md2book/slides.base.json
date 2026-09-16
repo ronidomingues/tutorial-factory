@@ -1,0 +1,53 @@
+{
+  "_comentario": "Base de estilo dos SLIDES de aula — pré-molde Course Factory, contrato course-factory-brand. O tools/publish-course.py mescla este arquivo com os dados do curso e grava <curso>/97-publicacao/slides/slides.json.",
+
+  "raiz": ".",
+  "entrada": "md",
+  "saida": "latex",
+  "saida_pdf": "pdf",
+  "pdf_unico": "slides-completo.pdf",
+  "ignorar": ["README.md", "LEIA-ME.md", "**/.git/**"],
+
+  "classe": "beamer",
+  "proporcao": "169",
+  "corpo": "10pt",
+  "idioma": "brazil",
+  "tema": "courseslides",
+  "opcoes_tema": "",
+
+  "fontes": {
+    "texto": "Latin Modern Roman",
+    "titulo": "Latin Modern Sans",
+    "mono": "Latin Modern Mono",
+    "simbolos": "DejaVu Sans",
+    "escala_texto": 1.0,
+    "escala_mono": 0.88
+  },
+
+  "cor_destaque": "3B82F6",
+  "cor_codigo_fundo": "19202B",
+  "cor_codigo_borda": "2A3442",
+  "cor_codigo_texto": "F6F7F9",
+  "cor_texto_apoio": "8A94A6",
+  "tamanho_codigo": 7.0,
+  "rotulo_linguagem": false,
+  "tabela_simples": true,
+
+  "capa_comando": "\\cfslidecover",
+  "secao_comando": "\\cfsection",
+  "fechamento_comando": "\\cfslideclosing",
+
+  "recursos": [
+    "../tema/beamerthemecourseslides.sty",
+    "../tema/brand-env.tex"
+  ],
+  "pacotes_extra": [],
+  "preambulo_extra": "",
+
+  "notas": "nenhuma",
+  "limite_linhas_slide": 12,
+  "limite_caracteres_slide": 900,
+
+  "motor": "xelatex",
+  "passagens": 2
+}

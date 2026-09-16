@@ -1,0 +1,17 @@
+/* GERADO por tools/sync-brand.py --palette a partir de brand.env. NÃO EDITE À MÃO: a fonte das cores é o brand.env. */
+:root {
+  --cf-ink:              #101620;   /* fundo escuro de capa e de slide; texto sobre papel */
+  --cf-panel:            #19202B;   /* superfície elevada sobre o fundo escuro */
+  --cf-border:           #2A3442;   /* contorno de bloco e de código no escuro */
+  --cf-blue:             #3B82F6;   /* cor condutora: filetes, títulos, marcadores */
+  --cf-blue-deep:        #1D4ED8;   /* o azul que passa em contraste sobre papel branco */
+  --cf-blue-soft:        #93B8FC;   /* azul sobre fundo escuro, para texto de apoio */
+  --cf-teal:             #14B8A6;   /* segunda voz: diagramas, subitens, ênfase secundária */
+  --cf-teal-deep:        #0D7D70;   /* o turquesa legível sobre papel */
+  --cf-amber:            #F0B429;   /* destaque único da tela — no máximo um por slide */
+  --cf-paper:            #F6F7F9;   /* papel do miolo impresso */
+  --cf-paper-hi:         #FFFFFF;   /* superfície de bloco sobre papel */
+  --cf-rule:             #D8DDE5;   /* filete e borda no claro */
+  --cf-muted:            #8A94A6;   /* texto de apoio sobre fundo escuro */
+  --cf-support:          #5A6472;   /* texto de apoio sobre papel */
+}

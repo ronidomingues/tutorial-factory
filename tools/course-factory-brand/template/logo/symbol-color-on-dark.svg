@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Course Factory — símbolo, fundo escuro</title>
+  <desc>Hexágono (ciência) com três nós ligados (conhecimento em rede).</desc>
+  <polygon points="32,3 57,17.5 57,46.5 32,61 7,46.5 7,17.5"
+           fill="none" stroke="#3B82F6" stroke-width="3.2" stroke-linejoin="round"/>
+  <g stroke="#3B82F6" stroke-width="2" stroke-linecap="round">
+    <line x1="32" y1="21" x2="20.5" y2="42"/>
+    <line x1="32" y1="21" x2="43.5" y2="42"/>
+    <line x1="20.5" y1="42" x2="43.5" y2="42"/>
+  </g>
+  <circle cx="32"   cy="21" r="5"   fill="#F0B429"/>
+  <circle cx="20.5" cy="42" r="4.2" fill="#14B8A6"/>
+  <circle cx="43.5" cy="42" r="4.2" fill="#3B82F6"/>
+</svg>

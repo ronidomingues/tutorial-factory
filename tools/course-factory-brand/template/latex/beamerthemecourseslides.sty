@@ -1,0 +1,264 @@
+%% ============================================================================
+%%  beamerthemecourseslides.sty — pré-molde neutro "Course Factory", SLIDES
+%%  ---------------------------------------------------------------------------
+%%  Implementa o contrato `course-factory-brand` para as aulas.
+%%  Fundo escuro de terminal, azul como cor condutora, âmbar como único
+%%  destaque quente — no máximo um por tela.
+%%
+%%  Uso:   \documentclass[aspectratio=169,10pt]{beamer}
+%%         \usetheme{courseslides}
+%%  As fontes são carregadas por quem gera o arquivo (md2book slides), para que
+%%  a mesma resolução de fonte valha no livro e nos slides.
+%%
+%%  Opções:  [claro]  inverte para fundo claro (impressão e apostila)
+%% ============================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemecourseslides}[2026/09/16 v1.0 Course Factory - slides]
+
+\RequirePackage{graphicx}
+\RequirePackage{etoolbox}
+\RequirePackage{xcolor}
+
+\newif\ifcf@light \cf@lightfalse
+\DeclareOption{claro}{\cf@lighttrue}
+\DeclareOption{light}{\cf@lighttrue}
+\DeclareOption{escuro}{\cf@lightfalse}
+\DeclareOption{dark}{\cf@lightfalse}
+\ProcessOptions\relax
+
+% ------------------------------------------------------------------ cores ---
+\definecolor{cfInk}      {HTML}{101620}
+\definecolor{cfPanel}    {HTML}{19202B}
+\definecolor{cfBorder}   {HTML}{2A3442}
+\definecolor{cfBlue}     {HTML}{3B82F6}
+\definecolor{cfBlueDeep} {HTML}{1D4ED8}
+\definecolor{cfBlueSoft} {HTML}{93B8FC}
+\definecolor{cfTeal}     {HTML}{14B8A6}
+\definecolor{cfTealDeep} {HTML}{0D7D70}
+\definecolor{cfAmber}    {HTML}{F0B429}
+\definecolor{cfPaper}    {HTML}{F6F7F9}
+\definecolor{cfPaperHi}  {HTML}{FFFFFF}
+\definecolor{cfRule}     {HTML}{D8DDE5}
+\definecolor{cfMuted}    {HTML}{8A94A6}
+\definecolor{cfSupport}  {HTML}{5A6472}
+
+
+% --------------------------------------------------------------- caminhos ---
+\def\cf@assets{../../tema/assets}
+\newcommand{\cfassets}[1]{\def\cf@assets{#1}}
+
+% ------------------------------------------------------------- metadados ----
+\def\cfBrand{Course Factory}
+\def\cfBrandLower{course factory}
+\def\cfTagline{Do assunto ao livro.}
+\def\cfDescriptor{Tecnologia · Ciência · Conhecimento}
+\def\cfSite{}
+\def\cfEmail{}
+\def\cfPrompt{\textasciitilde/course \$}
+\def\cf@course{}
+\def\cf@lecture{}
+\def\cf@advisor{}
+\def\cf@agent{}
+\def\cf@aimodel{}
+\def\cf@date{}
+\def\cf@produced{}
+\def\cf@version{1.0}
+\def\cf@license{}
+\newcommand{\cfcourse}[1]{\def\cf@course{#1}}
+\newcommand{\cflecture}[1]{\def\cf@lecture{#1}}
+\newcommand{\cfadvisor}[1]{\def\cf@advisor{#1}}
+\newcommand{\cfagent}[1]{\def\cf@agent{#1}}
+\newcommand{\cfaimodel}[1]{\def\cf@aimodel{#1}}
+\newcommand{\cfdate}[1]{\def\cf@date{#1}}
+\newcommand{\cfproduced}[1]{\def\cf@produced{#1}}
+\newcommand{\cfversion}[1]{\def\cf@version{#1}}
+\newcommand{\cflicense}[1]{\def\cf@license{#1}}
+
+\InputIfFileExists{brand-env.tex}{}{}
+
+%% Os papéis de cor são atribuídos DEPOIS do brand-env.tex de
+%% propósito: \colorlet copia o valor no ato, e rodando antes da
+%% leitura ele congelaria o padrão do .sty — a cor declarada no
+%% brand.env nunca chegaria à tela.
+% Papéis de cor, conforme o modo. No modo claro, a cor condutora passa a ser o
+% azul profundo: só ele tem contraste suficiente sobre papel branco.
+\ifcf@light
+  \colorlet{cfBg}{cfPaperHi}
+  \colorlet{cfFg}{cfInk}
+  \colorlet{cfSecondary}{cfSupport}
+  \colorlet{cfAccent}{cfBlueDeep}
+  \colorlet{cfSurface}{cfPaper}
+  \colorlet{cfOutline}{cfRule}
+  \colorlet{cfSecond}{cfTealDeep}
+\else
+  \colorlet{cfBg}{cfInk}
+  \colorlet{cfFg}{cfPaper}
+  \colorlet{cfSecondary}{cfMuted}
+  \colorlet{cfAccent}{cfBlue}
+  \colorlet{cfSurface}{cfPanel}
+  \colorlet{cfOutline}{cfBorder}
+  \colorlet{cfSecond}{cfTeal}
+\fi
+
+% ----------------------------------------------------------- base do tema ---
+\usetheme{default}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=9mm, text margin right=9mm}
+
+\setbeamercolor{normal text}{fg=cfFg, bg=cfBg}
+\setbeamercolor{structure}{fg=cfAccent}
+\setbeamercolor{alerted text}{fg=cfAmber}
+\setbeamercolor{frametitle}{fg=cfFg, bg=cfBg}
+\setbeamercolor{title}{fg=cfFg}
+\setbeamercolor{itemize item}{fg=cfAccent}
+\setbeamercolor{itemize subitem}{fg=cfSecond}
+\setbeamercolor{enumerate item}{fg=cfAccent}
+\setbeamercolor{section in toc}{fg=cfFg}
+\setbeamercolor{block title}{fg=cfPaper, bg=cfAccent}
+\setbeamercolor{block body}{fg=cfFg, bg=cfSurface}
+\setbeamercolor{block title alerted}{fg=cfInk, bg=cfAmber}
+\setbeamercolor{block body alerted}{fg=cfFg, bg=cfSurface}
+\setbeamercolor{block title example}{fg=cfPaper, bg=cfSecond}
+\setbeamercolor{block body example}{fg=cfFg, bg=cfSurface}
+\setbeamercolor{background canvas}{bg=cfBg}
+
+% Corpo em serifada (rm), títulos e rótulos em sans/mono.
+\renewcommand{\familydefault}{\rmdefault}
+\setbeamerfont{frametitle}{family=\sffamily, series=\bfseries, size=\large}
+\setbeamerfont{framesubtitle}{family=\rmfamily, size=\small}
+\setbeamerfont{title}{family=\sffamily, series=\bfseries, size=\LARGE}
+\setbeamerfont{subtitle}{family=\rmfamily, size=\normalsize}
+\setbeamerfont{itemize/enumerate body}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subbody}{size=\small}
+\setbeamerfont{block title}{family=\sffamily, series=\bfseries, size=\small}
+\setbeamerfont{footline}{family=\ttfamily, size=\tiny}
+
+\setbeamertemplate{itemize item}{\color{cfAccent}\raisebox{0.08ex}{\scriptsize$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{\color{cfSecond}\raisebox{0.1ex}{\tiny$\blacksquare$}}
+\setbeamertemplate{itemize subsubitem}{\color{cfSecondary}\raisebox{0.1ex}{\tiny$\bullet$}}
+\setbeamertemplate{enumerate item}{\color{cfAccent}\ttfamily[\insertenumlabel]}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+% ----------------------------------------------------- elementos da marca ---
+\newcommand{\cfcursorslide}{\,{\color{cfSecond}\rule[-0.06em]{0.40em}{0.9em}}}
+\newcommand{\cfpromptslide}{{\ttfamily\color{cfSecondary}\cfPrompt}\,}
+\newcommand{\cfrule}[1][1.6pt]{{\color{cfAccent}\rule{\linewidth}{#1}}}
+
+% Destaque de uma palavra/número — o único ponto quente da tela.
+\newcommand{\cfkey}[1]{{\bfseries\color{cfAmber}#1}}
+\newcommand{\cfalt}[1]{{\bfseries\color{cfSecond}#1}}
+
+% Assinatura: símbolo + nome em tipo, montada a partir do brand.env.
+\newcommand{\cf@sign}{%
+  \IfFileExists{\cf@assets/symbol-color-on-dark.pdf}
+    {\raisebox{-0.28\height}{\includegraphics[height=7mm]{\ifcf@light
+       \cf@assets/symbol-color.pdf\else
+       \cf@assets/symbol-color-on-dark.pdf\fi}}\hspace{2mm}}{}%
+  {\sffamily\bfseries\large\color{cfFg}\cfBrandLower}}
+
+% ------------------------------------------------------------- frametitle ---
+\setbeamertemplate{frametitle}{%
+  \vspace{3.2mm}%
+  {\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\insertframetitle\par}%
+  \ifx\insertframesubtitle\@empty\else
+    \vspace{0.6mm}{\usebeamerfont{framesubtitle}\color{cfSecondary}%
+      \insertframesubtitle\par}%
+  \fi
+  \vspace{1.4mm}{\color{cfAccent}\rule{16mm}{2pt}}%
+  \vspace{1.0mm}}
+
+% --------------------------------------------------------------- footline ---
+\setbeamertemplate{footline}{%
+  \hbox{\begin{beamercolorbox}[wd=\paperwidth, ht=4.6mm, dp=2.4mm,
+      leftskip=9mm, rightskip=9mm]{normal text}%
+    {\usebeamerfont{footline}\color{cfSecondary}%
+      \cfBrandLower\;·\;\cf@course
+      \hfill
+      \ifx\cf@lecture\@empty\else\cf@lecture\;·\;\fi
+      {\color{cfAccent}\insertframenumber}/\inserttotalframenumber}%
+  \end{beamercolorbox}}}
+
+% ------------------------------------------------------------ capa da aula --
+\newcommand{\cfslidecover}{%
+  \begin{frame}[plain,noframenumbering]
+    \vspace{1mm}
+    \cf@sign
+    \par\vspace{2mm}{\color{cfAccent}\rule{20mm}{2.2pt}}
+    \vfill
+    \ifx\cf@lecture\@empty\else
+      {\ttfamily\scriptsize\color{cfSecondary}\MakeUppercase{\cf@lecture}\par}
+      \vspace{2mm}
+    \fi
+    {\usebeamerfont{title}\color{cfFg}\inserttitle\cfcursorslide\par}
+    \ifx\insertsubtitle\@empty\else
+      \vspace{3mm}{\usebeamerfont{subtitle}\color{cfSecondary}%
+        \insertsubtitle\par}
+    \fi
+    \vspace{5mm}{\color{cfAccent}\rule{\linewidth}{1pt}}
+    \vspace{3mm}
+    {\ttfamily\scriptsize\color{cfSecondary}%
+      \begin{tabular}{@{}>{\color{cfSecondary}}l l@{}}
+      CURSO & {\color{cfFg}\cf@course}\\
+      \ifx\cf@advisor\@empty\else
+        AUTOR \& ORIENTADOR & {\color{cfFg}\cf@advisor}\\
+      \fi
+      \ifx\cf@agent\@empty\else
+        SLIDES ESCRITOS PELO AGENTE & {\color{cfFg}\cf@agent}\\
+      \fi
+      \ifx\cf@date\@empty\else DATA & {\color{cfFg}\cf@date}\\\fi
+      \end{tabular}\par}
+    \vfill
+    {\ttfamily\tiny\color{cfSecondary}\cfBrand\ · \cfTagline
+      \ifx\cfSite\@empty\else\ · \cfSite\fi\par}
+  \end{frame}}
+
+% ------------------------------------------------------- abertura de bloco --
+% Tela de transição: marca o começo de uma parte da aula.
+\newcommand{\cfsection}[2][]{%
+  \begin{frame}[plain,noframenumbering]
+    \vfill
+    {\cfpromptslide{\sffamily\bfseries\Large\color{cfFg}#2}\cfcursorslide\par}
+    \ifstrempty{#1}{}{\vspace{3mm}{\color{cfSecondary}\small #1\par}}
+    \vspace{4mm}\cfrule[2pt]
+    \vfill
+  \end{frame}}
+
+% Tela de fechamento: o que ficou, e o crédito de quem fez.
+\newcommand{\cfslideclosing}[1][]{%
+  \begin{frame}[plain,noframenumbering]
+    \vfill
+    \IfFileExists{\cf@assets/symbol-color.pdf}
+      {\includegraphics[height=11mm]{\ifcf@light
+         \cf@assets/symbol-color.pdf\else
+         \cf@assets/symbol-color-on-dark.pdf\fi}}{}
+    \par\vspace{4mm}
+    {\sffamily\bfseries\large\color{cfFg}\cf@course\par}
+    \ifstrempty{#1}{}{\vspace{2mm}{\small\color{cfSecondary}#1\par}}
+    \vspace{5mm}\cfrule[1.2pt]\vspace{4mm}
+    \ifx\cf@advisor\@empty\else
+      {\ttfamily\scriptsize\color{cfSecondary}%
+        Autoria e orientação: {\color{cfFg}\cf@advisor}\par}
+    \fi
+    \ifx\cf@agent\@empty\else
+      \vspace{1mm}{\ttfamily\scriptsize\color{cfSecondary}%
+        Escrito e materializado pelo agente {\color{cfFg}\cf@agent}%
+        \ifx\cf@aimodel\@empty\else\ (\cf@aimodel)\fi\par}
+    \fi
+    \ifx\cf@license\@empty\else
+      \vspace{1mm}{\ttfamily\scriptsize\color{cfSecondary}\cf@license\par}
+    \fi
+    \vspace{4mm}
+    {\ttfamily\scriptsize\color{cfSecondary}\cfBrand\ · \cfTagline
+      \ifx\cfSite\@empty\else\ · \cfSite\fi\par}
+    \vfill
+  \end{frame}}
+
+\AtBeginDocument{%
+  \hypersetup{pdftitle={\cf@course\ifx\cf@lecture\@empty\else\space—\space\cf@lecture\fi},
+    pdfauthor={\cf@advisor},
+    pdfsubject={Slides do curso \cf@course},
+    pdfcreator={Course Factory (md2book slides + beamerthemecourseslides.sty)},
+    pdfkeywords={\cfBrand, curso, aula}}}
+
+\endinput
