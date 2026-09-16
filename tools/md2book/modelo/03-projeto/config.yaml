@@ -1,0 +1,9 @@
+# Configuração do projeto de exemplo.
+# Só as linhas "chave: valor" são lidas; o resto é comentário.
+
+primeiro: 10
+segundo: 32
+terceiro: 8
+
+# Uma chave que não é número é ignorada pela soma:
+nome: exemplo

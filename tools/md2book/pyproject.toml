@@ -1,0 +1,35 @@
+[project]
+name = "md2book"
+version = "1.1.0"
+description = "Converte uma pasta de arquivos Markdown num livro completo em LaTeX e PDF, pronto para impressão."
+readme = "README.md"
+authors = [
+    { name = "Ronivaldo D. Andrade", email = "ronidomingues.ard@gmail.com" }
+]
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["markdown", "latex", "pdf", "livro", "book", "curso", "xelatex"]
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: Education",
+    "Natural Language :: Portuguese (Brazilian)",
+    "Programming Language :: Python :: 3",
+    "Topic :: Text Processing :: Markup :: Markdown",
+    "Topic :: Text Processing :: Markup :: LaTeX",
+]
+
+# Nenhuma dependência Python: a conversão Markdown -> LaTeX é própria.
+# O que se exige é externo ao Python: XeLaTeX e as fontes DejaVu (veja o README).
+dependencies = []
+
+[project.scripts]
+md2book = "md2book.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.12.7,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "md2book"
+module-root = "src"

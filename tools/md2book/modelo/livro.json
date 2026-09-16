@@ -1,0 +1,42 @@
+{
+  "titulo": "Curso Modelo",
+  "subtitulo": "A estrutura que o md2book espera",
+  "autor": "",
+  "ano": "2026",
+  "nota_capa": "Este curso não ensina nada: ele existe para mostrar, na prática, que estrutura de pastas e que marcação o md2book aceita. Use-o como gabarito ao montar um curso de verdade.",
+
+  "abertura": ["00-mapa.md"],
+
+  "partes": [
+    {
+      "titulo": "Porta de entrada",
+      "subtitulo": "O que é, como instalar e um projeto que roda",
+      "arquivos": [
+        "01-introducao.md",
+        "02-instalacao.md",
+        "03-projeto/README.md"
+      ]
+    },
+    {
+      "titulo": "Núcleo",
+      "subtitulo": "O modelo mental por dentro",
+      "arquivos": ["10-conceitos.md"]
+    },
+    {
+      "titulo": "Fontes",
+      "subtitulo": "Referências e vocabulário",
+      "arquivos": ["90-referencias.md", "GLOSSARIO.md"]
+    }
+  ],
+
+  "titulos": {
+    "00-mapa.md": "Mapa do curso"
+  },
+
+  "apendice_fontes": {
+    "ativo": true,
+    "titulo": "Código-fonte do projeto de exemplo",
+    "introducao": "Listagem integral dos arquivos de `03-projeto/`, para leitura em papel.",
+    "padroes": ["03-projeto/**/*"]
+  }
+}
