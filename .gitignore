@@ -1,0 +1,68 @@
+# =============================================================================
+#  Tutorial Factory — o que NÃO sobe para o repositório
+# =============================================================================
+
+# --- a documentação gerada ---------------------------------------------------
+# O material produzido pela fábrica não mora aqui. São dezenas de MB de PDF e
+# de LaTeX por software, e o conteúdo pertence a quem o gerou — não à
+# ferramenta. Publique a documentação onde ela deve circular (site, Drive,
+# servidor, wiki ou um repositório próprio) e mantenha o catálogo em INDEX.md.
+/documentation/
+/documentacao/
+# O ponteiro do destino: descreve ESTA máquina, não o projeto.
+/DOCUMENTATION_PATH
+.publicacao.json
+.publication.json
+
+# --- o kit de marca instalado ------------------------------------------------
+# `tools/course-factory-brand/` é um SLOT de dependência: quem publica instala
+# ali a sua identidade, normalmente um repositório separado (e privado, se a
+# marca for). Só o pré-molde neutro é versionado aqui.
+/tools/course-factory-brand/*
+!/tools/course-factory-brand/template/
+
+# --- Python ------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# --- LaTeX -------------------------------------------------------------------
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+*.fls
+*.fdb_latexmk
+*.xdv
+*.bbl
+*.blg
+*.idx
+*.synctex.gz
+
+# --- sistema operacional e editores -----------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+.idea/
+.vscode/
+
+# --- segredos ----------------------------------------------------------------
+# Nada de credencial neste repositório, em nenhuma circunstância.
+.env
+.env.*
+!*/brand.env
+*.pem
+*.key
+credentials.json

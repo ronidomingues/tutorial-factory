@@ -1,0 +1,58 @@
+MIT License
+
+Copyright (c) 2026 Ronivaldo Domingues de Andrade
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+  ESCOPO DESTA LICENÇA — LEIA ANTES DE ASSUMIR
+================================================================================
+
+A licença MIT acima cobre **a fábrica**: o preset `CLAUDE.md`, os programas em
+`tools/`, o pré-molde de marca em `tools/course-factory-brand/template/`, a
+documentação em `docs/` e os demais arquivos versionados neste repositório.
+
+Ela **não** cobre, e nada aqui concede direito sobre:
+
+1. **A documentação produzida com a fábrica.** Os manuais de instalação e de
+   uso gerados pertencem a quem os gerou e são licenciados por essa pessoa.
+   Este repositório não distribui documentação nenhuma — `documentation/` não
+   é versionado.
+
+2. **O software documentado.** Um manual sobre o Docker não concede direito
+   nenhum sobre o Docker, nem se apresenta como documentação oficial dele.
+   Marcas, logotipos e nomes de produto citados pertencem aos respectivos
+   titulares e são usados apenas para identificar o software descrito.
+
+3. **Kits de marca de terceiros.** `tools/course-factory-brand/` é um slot de
+   dependência. A identidade instalada ali (logotipo, paleta, tipografia,
+   manual, `.sty`) pertence ao seu titular e segue a licença dele, que pode ser
+   proprietária. Nada é concedido por estar dentro dessa pasta.
+
+4. **A marca Andrada's Dev.** Nome, símbolo, tagline "Do backlog ao deploy.",
+   paleta e arquivos de identidade da Andrada's Dev são de titularidade de
+   Ronivaldo Domingues de Andrade, **não integram este repositório público** e
+   não são licenciados por este documento. Usar a fábrica é permitido; assinar
+   material com a marca Andrada's Dev, não.
+
+5. **Componentes de terceiros.** md2book, fontes e pacotes LaTeX mantêm as
+   respectivas licenças. Ver `THIRD-PARTY-NOTICES.md`.
+
+Em resumo: a ferramenta é livre; a identidade de cada um é de cada um; e o que
+você produzir com ela é seu.
