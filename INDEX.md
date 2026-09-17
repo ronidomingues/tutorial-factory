@@ -16,13 +16,10 @@ Números de **16/09/2026**. Saem de `python3 tools/publish-all.py --check`.
 
 | Métrica | Valor |
 |---|---|
-| Softwares documentados | **0** |
-| Manuais de instalação | **0** |
-| Manuais de uso | **0** |
-| Páginas em PDF | **0** |
-
-A fábrica acabou de ser montada. O primeiro software entra aqui na primeira vez
-que alguém abrir um agente nesta pasta e perguntar como instalar alguma coisa.
+| Softwares documentados | **1** |
+| Manuais de instalação | **1** |
+| Manuais de uso | **1** |
+| Páginas em PDF | **137** |
 
 ---
 
@@ -30,7 +27,7 @@ que alguém abrir um agente nesta pasta e perguntar como instalar alguma coisa.
 
 | Software | Edição | Ambiente testado | Páginas | O que cobre |
 |---|---|---|---|---|
-| *(nenhum ainda)* | — | — | — | — |
+| Java (Temurin JDK 25 LTS) | 16/09/2026 | Debian 12 (bookworm), amd64 — Temurin 25.0.4.1+1 | 65 + 72 = 137 | Do Debian 12 sem Java até o JDK 25 LTS funcionando, com `JAVA_HOME`, Maven, Gradle, convivência com o JDK 21 do Android e uma API HTTP completa |
 
 **Como preencher uma linha**, quando ela existir:
 
@@ -54,7 +51,8 @@ testado em contêiner — registre aqui, com a data, e tire quando resolver.
 
 | Software | O que falta | Desde |
 |---|---|---|
-| *(nada pendente)* | — | — |
+| Java | Seção 15.3 (openSUSE) não pôde ser executada: o repositório `rpm/opensuse/15.6` da Adoptium não existe, e a tentativa pelo repositório de SLES 15 esbarrou no tempo-limite do contêiner. Os comandos estão publicados marcados como não verificados | 16/09/2026 |
+| Java | Capítulo 16 (Windows e macOS) escrito a partir da documentação oficial, sem execução — não há como rodar `winget` ou `brew` em contêiner Linux | 16/09/2026 |
 
 ---
 
@@ -66,4 +64,4 @@ clonou este repositório encontrar o que ele produziu.
 
 | Onde | O que tem lá | Acesso |
 |---|---|---|
-| *(ainda em nenhum lugar)* | — | — |
+| `~/dev-learning-lab/java/` (máquina local, fora deste repositório) | Java — manual de instalação e manual de uso, em `.md`, `.tex` e `.pdf` | local |
