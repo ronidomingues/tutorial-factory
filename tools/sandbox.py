@@ -30,6 +30,7 @@ naming the step, instead of implying it was tested.
 """
 
 import argparse
+import os
 import re
 import shutil
 import subprocess
@@ -185,6 +186,19 @@ def executar(engine: list, imagem: str, script: str, rede: bool,
     cmd = engine + ["run", "--rm", "-i"]
     if not rede:
         cmd += ["--network", "none"]
+    else:
+        # A machine behind a corporate proxy reaches the internet only through
+        # it, and the container inherits nothing. Forward the proxy variables
+        # the host already has, so the documented commands run as written
+        # instead of failing on a network the reader does not have.
+        for nome in ("http_proxy", "https_proxy", "no_proxy"):
+            # Tools disagree on case: curl reads `https_proxy` and `HTTPS_PROXY`
+            # but ignores `HTTP_PROXY` on purpose, apt reads the lowercase pair.
+            # Pass whichever the host has under both spellings.
+            valor = os.environ.get(nome) or os.environ.get(nome.upper())
+            if valor:
+                cmd += ["-e", "%s=%s" % (nome, valor),
+                        "-e", "%s=%s" % (nome.upper(), valor)]
     if privilegiado:
         cmd += ["--privileged"]
     if montar:
